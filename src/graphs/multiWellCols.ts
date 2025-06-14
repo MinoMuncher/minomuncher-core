@@ -60,32 +60,6 @@ export function createMultiWellCols(rootDiv: HTMLElement, graphname: string, use
 
   }
 
-
-
-  // Draw bars
-  /*svg.selectAll("rect")
-      .data(normalizedData)
-      .enter()
-      .append("rect")
-      .attr("class", "bar")
-      .attr("x", (_d, i) => x(i)!)
-      .attr("y", d => y(d))
-      .attr("height", d => y(0) - y(d))
-      .attr("width", x.bandwidth())
-      .attr("fill", (_d, i) => rainbow[i])
-
-  // Add value labels
-  svg.selectAll("text.label")
-      .data(normalizedData)
-      .enter()
-      .append("text")
-      .attr("text-anchor", "middle")
-      .attr("class", "label")
-      .attr("x", (_d, i) => x(i)! + x.bandwidth() / 2)
-      .attr("y", d => y(d) - 5)
-      .attr("fill", defaultScheme.f_high)
-      .text(d => d.toFixed(1) + "%");*/
-
   // X-axis
   const xAsis = svg.append("g")
     .attr("transform", `translate(0,${height - margin.bottom})`)

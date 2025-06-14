@@ -7,11 +7,12 @@ export type ClearType =
     "double" | "tspinDouble" | "triple" |
     "tspinTriple" | "quad"
 
-
 export type DeathTypes = "Surge Conflict" | "Surge Spike" | "Cheese Spike" | "Spike" | "Cheese Pressure" | "Pressure"
 
 export type MinoType = "I" | "O" | "T" | "L" | "J" | "S" | "Z"
-
+/**
+ * INTERNAL Type for each piece lock result.
+ * **/
 export type LockResult = {
     shape: MinoType,
     clearInfo?: {
@@ -26,7 +27,12 @@ export type LockResult = {
     frameDelay: number,
     wellColumn?: number
 }
-
+/** 
+ * Post processing stats for a player that can be derived from multiple games.
+ * These stats are not combinable, and must be calculated from raw GameStats.
+ * 
+ * These stats are designed to be used for graphing and visualization.
+ * **/
 export type CumulativeStats = {
     wellColumns: number[] //graphed out
     clearTypes: { [key in ClearType]: number } //graphed out
@@ -99,7 +105,9 @@ export type StackSpeed = {
         totalFrames: number,
     }
 }
-
+/** 
+ * Dictionary of death types to number of deaths of that type.
+ * **/
 export type DeathStats = { [key in DeathTypes]: number }
 
 export type PlacementStats = {
@@ -175,11 +183,6 @@ export type SurgeStats = {
     btbClears: number
 }
 
-export type SpikeStats = {
-    attack: number,
-    frames: number,
-
-}
 export type ComboStats = {
     chains: number
     combo: number
@@ -190,7 +193,11 @@ export type ComboStats = {
     pieces: number
     fails: number
 }
-
+/** 
+ * Stats that can be directly recorded and combined from frames.
+ * These stats are designed to be able to be combined across multiple games.
+ * These stats can then be post processed into CumulativeStats.
+ * **/
 export type GameStats = {
     placement: PlacementStats,
     garbage: GarbageStats
@@ -198,7 +205,9 @@ export type GameStats = {
     death: DeathStats
     kill: DeathStats
 }
-
+/** 
+ * Creates a new GameStats object with all values initialized to their default.
+ * **/
 export function newGameStats(): GameStats {
     const placementStats: PlacementStats = {
         ppsSegments: new Array(100).fill(0),
@@ -295,9 +304,21 @@ export function newGameStats(): GameStats {
         }
     }
 }
-
-type CombinableStats<T> = { [key in keyof T]: number | number[] | CombinableStats<T[key]> }
-
+/**
+ * CombinableStats may contain values of combinable value types or other CombinableStats objects.
+ * The only value types supported are number and number[].
+ * 
+ * Number values are added together.
+ * Number[] values are added element-wise. The arrays must be of the same length.
+ * 
+ * CombinableStats values are combined recursively.
+ * **/
+export type CombinableStats<T> = { [key in keyof T]: number | number[] | CombinableStats<T[key]> }
+/**
+ * Combines the right hand side stats into the left hand side stats recursively.
+ * @param first The left hand side stats (mutated).
+ * @param second The right hand side stats (unmutated).
+ * **/
 export function combineStats<T>(first: CombinableStats<T>, second: CombinableStats<T>) {
     for (const key in first) {
         if (typeof first[key] === "number" && typeof second[key] === "number") {
