@@ -1,0 +1,44 @@
+{
+  "name": "minomuncher-core",
+  "type": "module",
+  "version": "0.0.0",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "description": "",
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
+  "scripts": {
+    "build": "bun run build.ts",
+    "prepublishOnly": "bun run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "bun"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/wobsoriano/pkg-name#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wobsoriano/pkg-name.git"
+  },
+  "bugs": "https://github.com/wobsoriano/pkg-name/issues",
+  "author": "Robert Soriano <sorianorobertc@gmail.com>",
+  "devDependencies": {
+    "@types/bun": "^1.1.10",
+    "@types/d3": "^7.4.3",
+    "@types/d3-sankey": "^0.12.4",
+    "bun-plugin-dts": "^0.3.0"
+  },
+  "dependencies": {
+    "@haelp/teto": "^3.1.2",
+    "d3": "^7.9.0",
+    "d3-sankey": "^0.12.3",
+    "gaussian-mixture": "^0.9.1"
+  }
+}
