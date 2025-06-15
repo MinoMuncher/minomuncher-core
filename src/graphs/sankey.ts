@@ -29,7 +29,7 @@ export function createSankey<NodeName extends string>(
   let graphCount = 0
   for (const graph of data) {
     const sankey = d3Sankey.sankey<{ name: NodeName }, object>()
-      .nodeSort((b, a) => {
+      .nodeSort((a, b) => {
         return indexedNodeNames.indexOf(a.name) - indexedNodeNames.indexOf(b.name)
       })
       .linkSort(() => null)

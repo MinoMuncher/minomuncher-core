@@ -370,7 +370,7 @@ export function createGraph(rootDiv: HTMLElement, graphType: GraphType, stats: P
 
     else if (graphType == "attack recieved") {
         type NodeName = "IncomingAttacks" | "Cheese" | "Clean" | "Cancelled" | "CheeseTanked" | "CleanTanked"
-        const indexedNodeNames: NodeName[] = ["IncomingAttacks", "Cheese", "Clean", "Cancelled", "CheeseTanked", "CleanTanked"]
+        const indexedNodeNames: NodeName[] = ["IncomingAttacks", "Cheese", "Clean", "Cancelled", "CheeseTanked","CleanTanked"]
 
         function color(nodeName: NodeName, targetNodeName: NodeName) {
             if (targetNodeName == "CleanTanked") {
@@ -404,31 +404,31 @@ export function createGraph(rootDiv: HTMLElement, graphType: GraphType, stats: P
                 name: stats[key].username,
                 links: [
                     {
-                        source: 0, target: 2,
+                        source: 0, target: 1,
                         value: (Math.round(s.cheeseLinesRecieved * 100))
                     },
                     {
-                        source: 0, target: 1,
+                        source: 0, target: 2,
                         value: (Math.round(s.cleanLinesRecieved * 100))
                     },
                     {
-                        source: 2, target: 5,
+                        source: 1, target: 3,
                         value: (Math.round(s.cheeseLinesCancelled * 100))
                     },
                     {
-                        source: 2, target: 4,
+                        source: 1, target: 4,
                         value: (Math.round(s.cheeseLinesTanked * 100))
                     },
                     {
-                        source: 1, target: 5,
+                        source: 2, target: 3,
                         value: (Math.round(s.cleanLinesCancelled * 100))
                     },
                     {
-                        source: 1, target: 4,
+                        source: 2, target: 4,
                         value: (Math.round(s.cleanLinesTankedAsCheese * 100))
                     },
                     {
-                        source: 1, target: 3,
+                        source: 2, target: 5,
                         value: (Math.round(s.cleanLinesTankedAsClean * 100))
                     },
                 ]
