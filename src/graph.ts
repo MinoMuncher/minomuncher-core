@@ -369,10 +369,7 @@ export function createGraph(rootDiv: HTMLElement, graphType: GraphType, stats: P
 
 
     else if (graphType == "attack recieved") {
-        type NodeName = "IncomingAttacks" | "Cheese" | "Clean" | "Cancelled" | "CheeseTanked" | "CleanTanked"
-        const indexedNodeNames: NodeName[] = ["IncomingAttacks", "Cheese", "Clean", "Cancelled", "CheeseTanked","CleanTanked"]
-
-        function color(nodeName: NodeName, targetNodeName: NodeName) {
+        function color(nodeName: string, targetNodeName: string) {
             if (targetNodeName == "CleanTanked") {
                 return defaultRainbow.green
             }
@@ -395,46 +392,33 @@ export function createGraph(rootDiv: HTMLElement, graphType: GraphType, stats: P
             return defaultRainbow.teal
         }
 
-        const data: { name: string; links: { source: number; target: number; value: number; }[]; }[] = []
+        const data = []
 
         for (const key in stats) {
             if (!(stats[key].stats.cheeseLinesRecieved + stats[key].stats.cleanLinesRecieved > 0)) continue
             const s = stats[key].stats
             data.push({
                 name: stats[key].username,
+                nodes: [
+                    { nodeId: 0, name: "IncomingAttacks" },
+                    { nodeId: 1, name: "Cheese" },
+                    { nodeId: 2, name: "Clean" },
+                    { nodeId: 3, name: "Cancelled" },
+                    { nodeId: 4, name: "CheeseTanked" },
+                    { nodeId: 5, name: "CleanTanked" }
+                ],
                 links: [
-                    {
-                        source: 0, target: 1,
-                        value: (Math.round(s.cheeseLinesRecieved * 100))
-                    },
-                    {
-                        source: 0, target: 2,
-                        value: (Math.round(s.cleanLinesRecieved * 100))
-                    },
-                    {
-                        source: 1, target: 3,
-                        value: (Math.round(s.cheeseLinesCancelled * 100))
-                    },
-                    {
-                        source: 1, target: 4,
-                        value: (Math.round(s.cheeseLinesTanked * 100))
-                    },
-                    {
-                        source: 2, target: 3,
-                        value: (Math.round(s.cleanLinesCancelled * 100))
-                    },
-                    {
-                        source: 2, target: 4,
-                        value: (Math.round(s.cleanLinesTankedAsCheese * 100))
-                    },
-                    {
-                        source: 2, target: 5,
-                        value: (Math.round(s.cleanLinesTankedAsClean * 100))
-                    },
+                    { source: 0, target: 1, value: (Math.round(s.cheeseLinesRecieved * 100)) },
+                    { source: 0, target: 2, value: (Math.round(s.cleanLinesRecieved * 100)) },
+                    { source: 1, target: 3, value: (Math.round(s.cheeseLinesCancelled * 100)) },
+                    { source: 1, target: 4, value: (Math.round(s.cheeseLinesTanked * 100)) },
+                    { source: 2, target: 3, value: (Math.round(s.cleanLinesCancelled * 100)) },
+                    { source: 2, target: 4, value: (Math.round(s.cleanLinesTankedAsCheese * 100)) },
+                    { source: 2, target: 5, value: (Math.round(s.cleanLinesTankedAsClean * 100)) }
                 ]
             })
         }
-        createSankey<NodeName>(rootDiv, data, indexedNodeNames, color)
+        createSankey(rootDiv, data, color)
     }
 
 
