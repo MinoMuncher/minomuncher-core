@@ -12,6 +12,7 @@
     "require": "./dist/index.cjs"
   },
   "scripts": {
+		"test": "tsc --noEmit",
     "build": "bun run build.ts",
     "prepublishOnly": "bun run build",
     "doc": "typedoc src/index.ts"
@@ -31,14 +32,14 @@
   "bugs": "https://github.com/MinoMuncher/minomuncher-core/issues",
   "author": "frey_tetris",
   "devDependencies": {
-    "@types/bun": "^1.1.10",
+    "@types/bun": "^1.2.20",
     "@types/d3": "^7.4.3",
     "@types/d3-sankey": "^0.12.4",
     "bun-plugin-dts": "^0.3.0",
-    "typedoc": "^0.28.5"
+    "typedoc": "^0.28.10"
   },
   "dependencies": {
-    "@haelp/teto": "^3.1.5",
+    "@haelp/teto": "^3.3.1",
     "d3": "^7.9.0",
     "d3-sankey": "^0.12.3",
     "gaussian-mixture": "^0.9.1"
